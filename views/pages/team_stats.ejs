@@ -1,0 +1,65 @@
+<% include ../partials/header %>
+<% include ../partials/menu %>
+	<div class="container">
+		<br>
+		<div class="jumbotron">
+		  <h1 class="display-4">Fall 2018 Stats</h1>
+		  <p class="lead">Detailed information on how the Buffs are doing in the 2018 Football Season!</p>
+		</div>
+
+		<table class="table table-bordered" id="stats_table">
+			<tr>
+				<th class="align-bottom" rowspan="2">Game Date</th>
+				<th class="align-bottom"rowspan="2">Opposing Team Name</th>
+				<th class="text-center" colspan="2">Score</th>
+				<th class="align-bottom" rowspan="2">Winner</th>
+			</tr>
+			<tr>
+				<th>Home Score</th>
+				<th>Opp. Score</th>
+			</tr>
+				<form action="/team_stats" method="get">
+					<%
+					if (result_1) {
+						var tableData = '';
+						result_1.forEach(function(item){
+							tableData += "<tr><td>" + item.game_date + "</td><td>" + item.visitor_name + "</td><td>" + item.home_score + "</td><td>" + item.visitor_score + "</td>";
+								if(item.visitor_score > item.home_score){
+									tableData += "<td>" + item.visitor_name + "</td></tr>";
+								}
+								else{
+									tableData += '<td>CU Boulder</td></tr>';
+								}
+						}); %>
+						<%- tableData %>
+					<% } %>
+				</form>
+
+
+		</table>
+		<br>
+		<table class="table text-center">
+			<tr>
+				<th>Wins</th> <!-- result_2 -->
+				<th>Losses</th> <!-- result_3 -->
+			</tr>
+			<tr>
+				<td>
+					<% if(result_2)
+					{%>
+						<%= result_2[0].count  %>
+					<%}%>
+				</td>
+				<td>
+					<% if(result_3)
+					{%>
+						<%= result_3[0].count  %>
+					<%}%>
+				</td>
+			</tr>
+		</table>
+	</div>
+<% include ../partials/footer %>
+
+
+/*The Footbal Season Stats page has now been updated to fill in information for all of our football games via queries to our football_games database table.*/
